@@ -4,7 +4,10 @@
 import { useState, useEffect, useMemo } from "react";
 import dynamic from "next/dynamic";
 
-import { fetchPeople, fetchPeopleWithFilters } from "./lib/services/GraphqlService";
+import {
+  fetchPeople,
+  fetchPeopleWithFilters,
+} from "./lib/services/GraphqlService";
 
 import { Person, RelationshipStatus } from "./lib/types/graphqlTypes";
 import FiltersPanel, { FilterOptions } from "./components/FiltersModal";
@@ -82,7 +85,9 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedPersonId, setSelectedPersonId] = useState<string | null>(null);
-  const [selectedPeopleForMutual, setSelectedPeopleForMutual] = useState<string[]>([]); // Array de hasta 2 personas
+  const [selectedPeopleForMutual, setSelectedPeopleForMutual] = useState<
+    string[]
+  >([]); // Array de hasta 2 personas
   const [filters, setFilters] = useState<FilterOptions>(DEFAULT_FILTERS);
   const [showAnalytics, setShowAnalytics] = useState(false);
 
@@ -106,21 +111,21 @@ export default function Home() {
   // Manejador de click en nodos para amigos comunes
   const handleNodeClick = (node: any) => {
     setSelectedPersonId(node.id);
-    
+
     // Lógica para seleccionar personas para amigos comunes
     setSelectedPeopleForMutual((prev) => {
       const newSelection = [...prev];
-      
+
       // Si ya existe en la selección, removerlo
       if (newSelection.includes(node.id)) {
         return newSelection.filter((id) => id !== node.id);
       }
-      
+
       // Si hay menos de 2, agregarlo
       if (newSelection.length < 2) {
         return [...newSelection, node.id];
       }
-      
+
       // Si hay 2, remover el primero y agregar el nuevo
       newSelection.shift();
       return [...newSelection, node.id];
@@ -142,19 +147,21 @@ export default function Home() {
     const loadData = async () => {
       try {
         setLoading(true);
-        
+
         // Siempre cargar todas las personas para los reportes
         const people: Person[] = await fetchPeople();
         setAllPeople(people);
-        
+
         // Usar query general si no hay filtros, query con filtros si los hay
         const displayPeople: Person[] = hasActiveFilters
           ? await fetchPeopleWithFilters(filters)
           : people;
-        
+
         // Transformar datos a formato de grafo
         const nodes: GraphNode[] = displayPeople
-          .filter(person => (person.relationshipsConnection?.totalCount || 0) > 0)
+          .filter(
+            (person) => (person.relationshipsConnection?.totalCount || 0) > 0,
+          )
           .map((person) => ({
             id: person.id,
             label: person.name,
@@ -174,7 +181,7 @@ export default function Home() {
             });
           });
         });
-        
+
         setGraphData({ nodes, links });
         setLoading(false);
       } catch (error) {
@@ -202,10 +209,10 @@ export default function Home() {
   }
 
   return (
-    <div className="flex w-screen h-screen bg-gray-900">
+    <div className="flex w-full " style={{ height: "100vh" }}>
       {/* Panel de Reportes Lateral Izquierdo */}
-      <ReportsPanel 
-        people={allPeople} 
+      <ReportsPanel
+        people={allPeople}
         selectedPersonId={selectedPersonId}
         selectedPeopleForMutual={selectedPeopleForMutual}
       />
@@ -224,7 +231,7 @@ export default function Home() {
           }
           nodeAutoColorBy="id"
           width={dimensions.width}
-          height={dimensions.height}
+          height={dimensions.height - 64}
           nodeCanvasObject={(node, ctx, globalScale) => {
             const graphNode = node as GraphNode;
             const label = (graphNode.label || node.id || "").toString();
@@ -251,7 +258,8 @@ export default function Home() {
             // Dibujar el borde del círculo - más visible si está seleccionado
             ctx.strokeStyle =
               selectedPersonId === node.id ? "#fbbf24" : "#ffffff";
-            ctx.lineWidth = (selectedPersonId === node.id ? 4 : 2) / globalScale;
+            ctx.lineWidth =
+              (selectedPersonId === node.id ? 4 : 2) / globalScale;
             ctx.stroke();
 
             // Dibujar el texto
@@ -295,19 +303,22 @@ export default function Home() {
       </div>
 
       {/* Panel de Filtros Lateral Derecho */}
-      <FiltersPanel onFiltersChange={handleFiltersChange} currentFilters={filters} />
+      <FiltersPanel
+        onFiltersChange={handleFiltersChange}
+        currentFilters={filters}
+      />
 
       {/* Botón toggle para Análisis - Centrado arriba */}
       <button
         onClick={() => setShowAnalytics(!showAnalytics)}
-        className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors z-50 shadow-lg"
+        className="fixed top-20 left-1/2 transform -translate-x-1/2 z-[9999] bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors shadow-lg"
       >
         {showAnalytics ? "Cerrar Análisis" : "📊 Análisis"}
       </button>
 
       {/* Panel de Análisis Modal Centrado - Arriba */}
       {showAnalytics && (
-        <div className="fixed top-16 left-1/2 transform -translate-x-1/2 w-11/12 max-w-6xl bg-gray-800 border-2 border-gray-700 rounded-lg shadow-2xl z-50 overflow-y-auto max-h-[calc(100vh-100px)]">
+        <div className="fixed top-32 left-1/2 transform -translate-x-1/2 w-11/12 max-w-6xl bg-gray-800 border-2 border-gray-700 rounded-lg shadow-2xl z-[9998] overflow-y-auto max-h-[calc(100vh-200px)]">
           <div className="flex justify-between items-center sticky top-0 bg-gray-800 border-b border-gray-700 p-3 z-10">
             <h2 className="font-bold text-green-400">Reportes Cypher</h2>
             <button
@@ -317,8 +328,8 @@ export default function Home() {
               ✕
             </button>
           </div>
-          <CypherPanel 
-            people={allPeople} 
+          <CypherPanel
+            people={allPeople}
             selectedPersonId={selectedPersonId}
             selectedPeopleForMutual={selectedPeopleForMutual}
           />
