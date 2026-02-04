@@ -1,0 +1,26 @@
+type Person @node {
+  id: ID!
+  name: String!
+  nickname: String
+  email: String!
+  photoUrl: String
+  relationships: [Person!]!
+    @relationship(
+      type: "HAS_RELATIONSHIP"
+      direction: OUT
+      properties: "RelationshipProperties"
+    )
+    @filterable(byValue: false, byAggregate: false)
+}
+
+type RelationshipProperties @relationshipProperties {
+  status: RelationshipStatus!
+  frecuency: Int!
+  importance: Int!
+}
+
+enum RelationshipStatus {
+  FRIEND
+  FAMILY
+  COLLEAGUE
+}

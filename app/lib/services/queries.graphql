@@ -1,0 +1,59 @@
+query GetPeople {
+  people {
+    id
+    name
+    nickname
+    email
+    photoUrl
+    relationshipsConnection {
+      edges {
+        node {
+          id
+        }
+        properties {
+          status
+          importance
+          frecuency
+        }
+      }
+      totalCount
+    }
+  }
+}
+
+query GetPeopleWithFilters(
+  $statusFilter: RelationshipStatus
+  $frequencyMin: Int
+  $frequencyMax: Int
+  $importanceMin: Int
+  $importanceMax: Int
+) {
+  people {
+    id
+    name
+    nickname
+    email
+    photoUrl
+    relationshipsConnection(
+      where: {
+        edge: {
+          status: { eq: $statusFilter }
+          frecuency: { gte: $frequencyMin, lte: $frequencyMax }
+          importance: { gte: $importanceMin, lte: $importanceMax }
+        }
+      }
+    ) {
+      edges {
+        node {
+          id
+        }
+        properties {
+          status
+          importance
+          frecuency
+        }
+      }
+      totalCount
+    }
+  }
+}
