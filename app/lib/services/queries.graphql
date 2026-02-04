@@ -57,3 +57,100 @@ query GetPeopleWithFilters(
     }
   }
 }
+
+# Query para obtener amigos de una persona específica
+query GetFriends($personId: ID!) {
+  people(where: { id: $personId }) {
+    id
+    name
+    friends: relationshipsConnection(
+      where: {
+        edge: { status: { eq: FRIEND } }
+      }
+    ) {
+      edges {
+        node {
+          id
+          name
+          nickname
+          email
+        }
+        properties {
+          status
+          frecuency
+          importance
+        }
+      }
+      totalCount
+    }
+  }
+}
+
+# Query para obtener familiares de una persona específica
+query GetFamilyMembers($personId: ID!) {
+  people(where: { id: $personId }) {
+    id
+    name
+    familyMembers: relationshipsConnection(
+      where: {
+        edge: { status: { eq: FAMILY } }
+      }
+    ) {
+      edges {
+        node {
+          id
+          name
+          nickname
+          email
+        }
+        properties {
+          status
+          frecuency
+          importance
+        }
+      }
+      totalCount
+    }
+  }
+}
+
+# Query para obtener amigos comunes entre dos personas
+# Esta query utiliza código Cypher personalizado
+query GetMutualFriends($personId1: ID!, $personId2: ID!) {
+  mutualFriendsQuery(personId1: $personId1, personId2: $personId2) {
+    id
+    name
+    nickname
+    email
+    mutualFriendsCount
+  }
+}
+
+# Query para obtener la persona con mayor número de relacionados
+# Utiliza agregaciones y ordenamiento por count
+query GetMostConnectedPerson {
+  people(options: { limit: 1, sort: [{ relationshipsConnection: { totalCount: DESC } }] }) {
+    id
+    name
+    nickname
+    email
+    totalRelationships: relationshipsConnection {
+      totalCount
+    }
+  }
+}
+
+# Query para obtener personas influyentes (por importancia)
+# Ordenadas por promedio de importancia
+query GetInfluentialPeople($limit: Int = 10) {
+  people(options: { limit: $limit }) {
+    id
+    name
+    nickname
+    email
+    averageImportance
+    relationshipCount: relationshipsConnection {
+      totalCount
+    }
+  }
+}

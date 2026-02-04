@@ -77,7 +77,7 @@ export default function FiltersPanel({
   };
 
   return (
-    <div className="w-80 bg-gray-800 border-l border-gray-700 p-6 max-h-screen overflow-y-auto fixed right-0 top-0 h-full">
+    <div className="w-80 bg-gray-800 border-l border-gray-700 p-6 max-h-screen overflow-y-auto fixed right-0 top-0 h-full z-50">
       {/* Header */}
       <div className="mb-6">
         <h2 className="text-xl font-bold text-white">Filtros</h2>

@@ -8,6 +8,7 @@ import { fetchPeople, fetchPeopleWithFilters } from "./lib/services/GraphqlServi
 
 import { Person, RelationshipStatus } from "./lib/types/graphqlTypes";
 import FiltersPanel, { FilterOptions } from "./components/FiltersModal";
+import ReportsPanel from "./components/ReportsPanel";
 
 const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
   ssr: false,
@@ -76,7 +77,7 @@ export default function Home() {
     nodes: [],
     links: [],
   });
-
+  const [allPeople, setAllPeople] = useState<Person[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedPersonId, setSelectedPersonId] = useState<string | null>(null);
@@ -115,19 +116,23 @@ export default function Home() {
       try {
         setLoading(true);
         
+        // Siempre cargar todas las personas para los reportes
+        const people: Person[] = await fetchPeople();
+        setAllPeople(people);
+        
         // Usar query general si no hay filtros, query con filtros si los hay
-        const people: Person[] = hasActiveFilters
+        const displayPeople: Person[] = hasActiveFilters
           ? await fetchPeopleWithFilters(filters)
-          : await fetchPeople();
+          : people;
         // Transformar datos a formato de grafo
-        const nodes: GraphNode[] = people.map((person) => ({
+        const nodes: GraphNode[] = displayPeople.map((person) => ({
           id: person.id,
           label: person.name,
           size: person.relationshipsConnection?.totalCount,
         }));
 
         const links: GraphLink[] = [];
-        people.forEach((person) => {
+        displayPeople.forEach((person) => {
           person.relationshipsConnection?.edges.forEach((edge) => {
             links.push({
               source: person.id,
@@ -168,8 +173,17 @@ export default function Home() {
 
   return (
     <div className="flex w-screen h-screen bg-gray-900">
+      {/* Panel de Reportes Lateral Izquierdo */}
+      <ReportsPanel people={allPeople} selectedPersonId={selectedPersonId} />
+
       {/* Gráfico Principal */}
-      <div className="flex-1">
+      <div
+        className="flex-1 relative"
+        style={{
+          marginRight: "320px",
+          zIndex: 1,
+        }}
+      >
         <ForceGraph2D
           graphData={
             graphData.nodes.length > 0 ? graphData : { nodes: [], links: [] }
@@ -248,7 +262,7 @@ export default function Home() {
         />
       </div>
 
-      {/* Panel de Filtros Lateral */}
+      {/* Panel de Filtros Lateral Derecho */}
       <FiltersPanel onFiltersChange={handleFiltersChange} currentFilters={filters} />
     </div>
   );

@@ -11,6 +11,36 @@ type Person @node {
       properties: "RelationshipProperties"
     )
     @filterable(byValue: false, byAggregate: false)
+  
+  # Campo personalizado: promedio de importancia en relaciones
+  averageImportance: Float
+    @cypher(
+      statement: """
+      MATCH (this)-[rel:HAS_RELATIONSHIP]->()
+      RETURN CASE WHEN COUNT(rel) > 0 THEN toFloat(SUM(rel.importance)) / COUNT(rel) ELSE 0.0 END as result
+      """
+      columnName: "result"
+    )
+  
+  # Amigos de la persona (relaciones con status FRIEND)
+  friends: [Person!]!
+    @cypher(
+      statement: """
+      MATCH (this)-[rel:HAS_RELATIONSHIP {status: "FRIEND"}]->(friend:Person)
+      RETURN friend
+      """
+      columnName: "friend"
+    )
+  
+  # Familiares de la persona (relaciones con status FAMILY)
+  familyMembers: [Person!]!
+    @cypher(
+      statement: """
+      MATCH (this)-[rel:HAS_RELATIONSHIP {status: "FAMILY"}]->(family:Person)
+      RETURN family
+      """
+      columnName: "family"
+    )
 }
 
 type RelationshipProperties @relationshipProperties {
@@ -23,4 +53,57 @@ enum RelationshipStatus {
   FRIEND
   FAMILY
   COLLEAGUE
+}
+
+type MutualFriend {
+  id: ID!
+  name: String!
+  nickname: String
+  email: String!
+  mutualFriendsCount: Int!
+}
+
+type Query {
+  # Query personalizado para obtener amigos comunes entre dos personas
+  mutualFriendsQuery(personId1: ID!, personId2: ID!): [MutualFriend!]!
+    @cypher(
+      statement: """
+      MATCH (p1:Person {id: $personId1})-[rel1:HAS_RELATIONSHIP {status: "FRIEND"}]->(friend:Person)
+      MATCH (p2:Person {id: $personId2})-[rel2:HAS_RELATIONSHIP {status: "FRIEND"}]->(friend)
+      RETURN {
+        id: friend.id,
+        name: friend.name,
+        nickname: friend.nickname,
+        email: friend.email,
+        mutualFriendsCount: 1
+      } as result
+      """
+      columnName: "result"
+    )
+  
+  # Query personalizado para obtener personas influyentes (ordenadas por importancia promedio)
+  influentialPeople(limit: Int = 10): [Person!]!
+    @cypher(
+      statement: """
+      MATCH (p:Person)-[rel:HAS_RELATIONSHIP]->()
+      WITH p, CASE WHEN COUNT(rel) > 0 THEN toFloat(SUM(rel.importance)) / COUNT(rel) ELSE 0.0 END as avgImportance
+      ORDER BY avgImportance DESC
+      RETURN p
+      LIMIT $limit
+      """
+      columnName: "p"
+    )
+  
+  # Query personalizado para obtener la persona más conectada
+  mostConnectedPerson: Person
+    @cypher(
+      statement: """
+      MATCH (p:Person)-[rel:HAS_RELATIONSHIP]->()
+      WITH p, COUNT(rel) as connectionCount
+      ORDER BY connectionCount DESC
+      RETURN p
+      LIMIT 1
+      """
+      columnName: "p"
+    )
 }
