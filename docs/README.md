@@ -5,18 +5,18 @@ Bienvenido a la documentación completa del proyecto GraphQL Visualizer. Elige p
 ## 🚀 Acceso Rápido
 
 ### Para Nuevos Desarrolladores
-👉 **[Comienza aquí: README_FINAL.md](README_FINAL.md)** - Visión general completa del proyecto
+👉 **[Comienza aquí: Guía Completa](01_GUIA_COMPLETA.md)** - Visión general completa del proyecto
 
 ### Por Rol
 
 **👨‍💻 Frontend Developer**
-- [README_FINAL.md - Secciones GraphQL](README_FINAL.md#-graphql---queries-y-filtros)
-- [GRAPHQL_CYPHER_INTEGRATION.md - Flujo](GRAPHQL_CYPHER_INTEGRATION.md#-flujo-de-ejecución-de-una-query)
+- [Guía Completa - Secciones GraphQL](01_GUIA_COMPLETA.md#-graphql---queries-y-filtros)
+- [Integración - Flujo de Ejecución](02_INTEGRACION_GRAPHQL_CYPHER.md#-flujo-de-ejecución-de-una-query)
 
 **👨‍🔬 Backend/Database Developer**
-- [README_FINAL.md - Neo4j](README_FINAL.md#-neo4j-y-su-funcionamiento)
-- [CYPHER_GUIDE.md](CYPHER_GUIDE.md)
-- [GRAPHQL_CYPHER_INTEGRATION.md - Schema](GRAPHQL_CYPHER_INTEGRATION.md#-definición-del-schema)
+- [Guía Completa - Neo4j](01_GUIA_COMPLETA.md#-neo4j-y-su-funcionamiento)
+- [Guía Cypher](03_GUIA_CYPHER.md)
+- [Integración - Schema GraphQL](02_INTEGRACION_GRAPHQL_CYPHER.md#-definición-del-schema)
 
 **🏗️ Full Stack Developer**
 - Lee todos los documentos en orden
@@ -25,7 +25,7 @@ Bienvenido a la documentación completa del proyecto GraphQL Visualizer. Elige p
 
 ## 📖 Documentos Disponibles
 
-### 1. 📘 [README_FINAL.md](README_FINAL.md)
+### 1. 📘 [01_GUIA_COMPLETA.md](01_GUIA_COMPLETA.md)
 **Descripción general del proyecto**
 - Arquitectura completa
 - Neo4j explicado
@@ -34,7 +34,7 @@ Bienvenido a la documentación completa del proyecto GraphQL Visualizer. Elige p
 - API Reference
 - Ejemplos
 
-### 2. 🔗 [GRAPHQL_CYPHER_INTEGRATION.md](GRAPHQL_CYPHER_INTEGRATION.md)
+### 2. 🔗 [02_INTEGRACION_GRAPHQL_CYPHER.md](02_INTEGRACION_GRAPHQL_CYPHER.md)
 **Cómo funcionan juntos GraphQL y Cypher**
 - Arquitectura general
 - Flujo paso a paso
@@ -43,7 +43,7 @@ Bienvenido a la documentación completa del proyecto GraphQL Visualizer. Elige p
 - Performance
 - Debugging
 
-### 3. 🧭 [CYPHER_GUIDE.md](CYPHER_GUIDE.md)
+### 3. 🧭 [03_GUIA_CYPHER.md](03_GUIA_CYPHER.md)
 **Guía detallada de Cypher**
 - Conceptos fundamentales
 - Queries básicas
@@ -52,14 +52,14 @@ Bienvenido a la documentación completa del proyecto GraphQL Visualizer. Elige p
 - Optimización
 - Cheat sheet
 
-### 4. 📊 [QUERIES_SUMMARY.md](QUERIES_SUMMARY.md)
+### 4. 📊 [04_RESUMEN_QUERIES.md](04_RESUMEN_QUERIES.md)
 **Resumen visual de todas las queries**
 - Tabla completa
 - Matriz de decisión
 - Quick reference
 - Casos de uso
 
-### 5. 📚 [DOCUMENTATION_INDEX.md](DOCUMENTATION_INDEX.md)
+### 5. 📚 [05_INDICE_DOCUMENTACION.md](05_INDICE_DOCUMENTACION.md)
 **Índice completo de documentación**
 - Búsqueda rápida por tema
 - Matriz de contenido
@@ -71,39 +71,39 @@ Bienvenido a la documentación completa del proyecto GraphQL Visualizer. Elige p
 ## 🎯 Buscar por Tema
 
 ### Neo4j
-- [¿Qué es Neo4j?](README_FINAL.md#¿qué-es-neo4j)
-- [Estructura de datos](README_FINAL.md#estructura-de-datos)
-- [Ventajas para este proyecto](README_FINAL.md#ventajas-de-neo4j-para-este-proyecto)
+- [¿Qué es Neo4j?](01_GUIA_COMPLETA.md#¿qué-es-neo4j)
+- [Estructura de datos](01_GUIA_COMPLETA.md#estructura-de-datos)
+- [Ventajas para este proyecto](01_GUIA_COMPLETA.md#ventajas-de-neo4j-para-este-proyecto)
 
 ### GraphQL
-- [Queries principales](README_FINAL.md#queries-principales)
-- [Sintaxis Neo4j GraphQL](README_FINAL.md#sintaxis-neo4j-graphql)
-- [Flujo de ejecución](GRAPHQL_CYPHER_INTEGRATION.md#-flujo-de-ejecución-de-una-query)
+- [Queries principales](01_GUIA_COMPLETA.md#queries-principales)
+- [Sintaxis Neo4j GraphQL](01_GUIA_COMPLETA.md#sintaxis-neo4j-graphql)
+- [Flujo de ejecución](02_INTEGRACION_GRAPHQL_CYPHER.md#-flujo-de-ejecución-de-una-query)
 
 ### Cypher
-- [Introducción](CYPHER_GUIDE.md#-introducción-a-cypher)
-- [Queries básicas](CYPHER_GUIDE.md#-queries-básicas)
-- [Queries del proyecto](CYPHER_GUIDE.md#-queries-usadas-en-el-proyecto)
-- [Cheat sheet](CYPHER_GUIDE.md#-cheat-sheet)
+- [Introducción](03_GUIA_CYPHER.md#-introducción-a-cypher)
+- [Queries básicas](03_GUIA_CYPHER.md#-queries-básicas)
+- [Queries del proyecto](03_GUIA_CYPHER.md#-queries-usadas-en-el-proyecto)
+- [Cheat sheet](03_GUIA_CYPHER.md#-cheat-sheet)
 
 ### Componentes
-- [Paneles](README_FINAL.md#-paneles-y-componentes)
-- [Arquitectura](README_FINAL.md#-arquitectura-del-proyecto)
-- [Flujo de datos](README_FINAL.md#-flujo-de-datos)
+- [Paneles](01_GUIA_COMPLETA.md#-paneles-y-componentes)
+- [Arquitectura](01_GUIA_COMPLETA.md#-arquitectura-del-proyecto)
+- [Flujo de datos](01_GUIA_COMPLETA.md#-flujo-de-datos)
 
 ### Setup
-- [Instalación](README_FINAL.md#-instalación-y-configuración)
-- [Configuración Neo4j](README_FINAL.md#-pasos-de-instalación)
+- [Instalación](01_GUIA_COMPLETA.md#-instalación-y-configuración)
+- [Configuración Neo4j](01_GUIA_COMPLETA.md#-pasos-de-instalación)
 
 ---
 
 ## ✅ Checklist para Nuevos Desarrolladores
 
-- [ ] Leí [README_FINAL.md](README_FINAL.md)
+- [ ] Leí [01_GUIA_COMPLETA.md](01_GUIA_COMPLETA.md)
 - [ ] Entiendo cómo Neo4j almacena datos
-- [ ] Leí [GRAPHQL_CYPHER_INTEGRATION.md](GRAPHQL_CYPHER_INTEGRATION.md)
+- [ ] Leí [02_INTEGRACION_GRAPHQL_CYPHER.md](02_INTEGRACION_GRAPHQL_CYPHER.md)
 - [ ] Entiendo cómo GraphQL y Cypher interactúan
-- [ ] Leí [CYPHER_GUIDE.md](CYPHER_GUIDE.md)
+- [ ] Leí [03_GUIA_CYPHER.md](03_GUIA_CYPHER.md)
 - [ ] Ejecuté Neo4j localmente
 - [ ] Instalé y corrí el proyecto
 - [ ] Hice una query simple en Neo4j Browser
@@ -115,7 +115,7 @@ Bienvenido a la documentación completa del proyecto GraphQL Visualizer. Elige p
 
 ## 🔍 Índice Completo
 
-Para un índice detallado con búsqueda por tema, ve a [DOCUMENTATION_INDEX.md](DOCUMENTATION_INDEX.md).
+Para un índice detallado con búsqueda por tema, ve a [05_INDICE_DOCUMENTACION.md](05_INDICE_DOCUMENTACION.md).
 
 ---
 

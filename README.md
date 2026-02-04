@@ -65,49 +65,61 @@ Abre [http://localhost:3000](http://localhost:3000) 🎉
 
 ## 📚 Documentación
 
-Toda la documentación está en los siguientes archivos:
+Toda la documentación está organizada en la carpeta [`docs/`](docs/):
 
-### 📘 [README_FINAL.md](README_FINAL.md)
-Documentación completa y detallada del proyecto.
-- Arquitectura
-- Neo4j y funcionamiento
-- GraphQL queries y filtros
-- Cypher queries
-- API Reference
-- Ejemplos completos
+### 📘 [Guía Completa del Proyecto](docs/01_GUIA_COMPLETA.md)
+Documentación completa y detallada para entender el proyecto.
+- Arquitectura del sistema
+- Neo4j: concepto y funcionamiento
+- GraphQL: queries y filtros
+- Cypher: consultas avanzadas
+- API Reference completo
+- Ejemplos de flujo completo
 
-**Comienza aquí** ↑
+**👉 Comienza aquí si eres nuevo en el proyecto**
 
-### 🔗 [GRAPHQL_CYPHER_INTEGRATION.md](GRAPHQL_CYPHER_INTEGRATION.md)
-Cómo funcionan juntos GraphQL y Cypher.
-- Arquitectura de integración
+### 🔗 [Integración: GraphQL + Cypher](docs/02_INTEGRACION_GRAPHQL_CYPHER.md)
+Entender cómo GraphQL y Cypher trabajan juntos en Neo4j.
+- Arquitectura general de integración
 - Flujo de ejecución paso a paso
-- Schema GraphQL
-- Seguridad
-- Performance
-- Debugging
+- Definición del Schema GraphQL
+- Seguridad (parámetros vs interpolación)
+- Optimización de performance
+- Debugging de queries
 
-**Lee si necesitas debuggear o optimizar** ↑
+**👉 Lee esto si necesitas debuggear o optimizar queries**
 
-### 🧭 [CYPHER_GUIDE.md](CYPHER_GUIDE.md)
-Guía completa de Cypher.
-- Conceptos fundamentales
-- Queries básicas
-- Queries del proyecto (detalladas)
+### 🧭 [Guía Detallada de Cypher](docs/03_GUIA_CYPHER.md)
+Aprende Cypher en profundidad para escribir queries complejas.
+- Introducción a Cypher
+- Conceptos fundamentales (nodos, relaciones, propiedades)
+- Queries básicas (MATCH, WHERE, RETURN)
+- Queries del proyecto explicadas en detalle
 - Patrones avanzados
-- Testing
+- Optimización de queries Cypher
+- Debugging y testing
 - Cheat sheet
 
-**Lee si trabajas con Cypher** ↑
+**👉 Lee esto si quieres aprender o escribir Cypher**
 
-### 📖 [DOCUMENTATION_INDEX.md](DOCUMENTATION_INDEX.md)
-Índice y guía de navegación de la documentación.
-- Búsqueda rápida por tópico
-- Guías por rol
+### 📊 [Resumen Visual de Queries](docs/04_RESUMEN_QUERIES.md)
+Referencia rápida de todas las queries disponibles.
+- Tabla completa de queries (12 funciones)
+- Matriz de decisión: qué query usar
+- Quick reference por componente
+- Casos de uso típicos
+- Tips de performance
+
+**👉 Referencia rápida cuando necesites buscar una query**
+
+### 📚 [Índice de Documentación](docs/05_INDICE_DOCUMENTACION.md)
+Índice completo con búsqueda por tópico.
+- Búsqueda rápida por tema
 - Matriz de contenido
-- Flujos comunes
+- Ejemplos y flujos comunes
+- Checklist para nuevos desarrolladores
 
-**Navega la documentación** ↑
+**👉 Ve aquí para encontrar tópicos específicos**
 
 ---
 
@@ -134,11 +146,13 @@ graphql_visualizer/
 │   └── lib/types/
 │       └── graphql_definitions.graphql  # Schema + Cypher
 │
-└── Documentación
-    ├── README_FINAL.md           # 📘 Documentación completa
-    ├── GRAPHQL_CYPHER_INTEGRATION.md  # 🔗 Integración
-    ├── CYPHER_GUIDE.md           # 🧭 Guía Cypher
-    └── DOCUMENTATION_INDEX.md    # 📖 Índice
+└── docs/                        # 📚 Documentación
+    ├── README.md                 # Índice principal
+    ├── 01_GUIA_COMPLETA.md       # 📘 Guía completa
+    ├── 02_INTEGRACION_GRAPHQL_CYPHER.md  # 🔗 Integración
+    ├── 03_GUIA_CYPHER.md         # 🧭 Guía Cypher
+    ├── 04_RESUMEN_QUERIES.md     # 📊 Resumen queries
+    └── 05_INDICE_DOCUMENTACION.md # 📚 Índice
 ```
 
 ---

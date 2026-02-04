@@ -4,15 +4,15 @@
 
 Nuevo en el proyecto? Comienza aquí:
 
-1. **[README_FINAL.md](README_FINAL.md)** - Descripción general del proyecto
-2. **[GRAPHQL_CYPHER_INTEGRATION.md](GRAPHQL_CYPHER_INTEGRATION.md)** - Cómo funcionan juntos GraphQL y Cypher
-3. **[CYPHER_GUIDE.md](CYPHER_GUIDE.md)** - Guía detallada de Cypher
+1. **[01_GUIA_COMPLETA.md](01_GUIA_COMPLETA.md)** - Descripción general del proyecto
+2. **[02_INTEGRACION_GRAPHQL_CYPHER.md](02_INTEGRACION_GRAPHQL_CYPHER.md)** - Cómo funcionan juntos GraphQL y Cypher
+3. **[03_GUIA_CYPHER.md](03_GUIA_CYPHER.md)** - Guía detallada de Cypher
 
 ---
 
 ## 📖 Documentación Detallada
 
-### 📘 README_FINAL.md
+### 📘 01_GUIA_COMPLETA.md
 **Contenido**:
 - Descripción general del proyecto
 - Arquitectura del proyecto
@@ -29,7 +29,7 @@ Nuevo en el proyecto? Comienza aquí:
 
 ---
 
-### 🔗 GRAPHQL_CYPHER_INTEGRATION.md
+### 🔗 02_INTEGRACION_GRAPHQL_CYPHER.md
 **Contenido**:
 - Arquitectura general (diagrama)
 - Flujo de ejecución paso a paso
@@ -50,7 +50,7 @@ Nuevo en el proyecto? Comienza aquí:
 
 ---
 
-### 🧭 CYPHER_GUIDE.md
+### 🧭 03_GUIA_CYPHER.md
 **Contenido**:
 - Introducción a Cypher
 - Conceptos fundamentales (nodos, relaciones, propiedades)
@@ -76,9 +76,10 @@ Nuevo en el proyecto? Comienza aquí:
 
 ```
 graphql_visualizer/
-├── 📘 README_FINAL.md              ← COMIENZA AQUÍ
-├── 🔗 GRAPHQL_CYPHER_INTEGRATION.md
-├── 🧭 CYPHER_GUIDE.md
+├── docs/
+│   ├── 📘 01_GUIA_COMPLETA.md              ← COMIENZA AQUÍ
+│   ├── 🔗 02_INTEGRACION_GRAPHQL_CYPHER.md
+│   ├── 🧭 03_GUIA_CYPHER.md
 │
 ├── app/                            # Frontend Next.js
 │   ├── page.tsx                    # Componente principal
@@ -107,10 +108,10 @@ graphql_visualizer/
 ## 🎯 Guías por Rol
 
 ### 👨‍💻 Frontend Developer
-1. Lee: **README_FINAL.md** (secciones GraphQL)
-2. Lee: **GRAPHQL_CYPHER_INTEGRATION.md** (Flujo de Ejecución)
+1. Lee: **01_GUIA_COMPLETA.md** (secciones GraphQL)
+2. Lee: **02_INTEGRACION_GRAPHQL_CYPHER.md** (Flujo de Ejecución)
 3. Código: `app/lib/services/GraphqlService.ts`
-4. Referencia: API Reference en README_FINAL.md
+4. Referencia: API Reference en 01_GUIA_COMPLETA.md
 
 **Tareas típicas**:
 - Agregar nuevos componentes
@@ -118,9 +119,9 @@ graphql_visualizer/
 - Entender flujo de datos
 
 ### 👨‍🔬 Backend/Database Developer
-1. Lee: **README_FINAL.md** (Neo4j + Cypher)
-2. Lee: **CYPHER_GUIDE.md** (todo)
-3. Lee: **GRAPHQL_CYPHER_INTEGRATION.md** (Schema)
+1. Lee: **01_GUIA_COMPLETA.md** (Neo4j + Cypher)
+2. Lee: **03_GUIA_CYPHER.md** (todo)
+3. Lee: **02_INTEGRACION_GRAPHQL_CYPHER.md** (Schema)
 4. Código: `backend/lib/types/graphql_definitions.graphql`
 
 **Tareas típicas**:
@@ -130,9 +131,9 @@ graphql_visualizer/
 
 ### 🏗️ Full Stack Developer
 Lee toda la documentación en orden:
-1. **README_FINAL.md** - Contexto completo
-2. **GRAPHQL_CYPHER_INTEGRATION.md** - Cómo interactúan
-3. **CYPHER_GUIDE.md** - Referencia Cypher
+1. **01_GUIA_COMPLETA.md** - Contexto completo
+2. **02_INTEGRACION_GRAPHQL_CYPHER.md** - Cómo interactúan
+3. **03_GUIA_CYPHER.md** - Referencia Cypher
 4. Explora el código del proyecto
 
 ---
@@ -140,39 +141,39 @@ Lee toda la documentación en orden:
 ## 🔍 Búsqueda Rápida de Temas
 
 ### Neo4j
-- Descripción: **README_FINAL.md** → "Neo4j y su Funcionamiento"
-- Estructura de datos: **README_FINAL.md** → "Estructura de Datos"
-- Tipos de relaciones: **README_FINAL.md** → "Tipos de Relaciones"
-- Ventajas: **README_FINAL.md** → "Ventajas de Neo4j"
+- Descripción: **01_GUIA_COMPLETA.md** → "Neo4j y su Funcionamiento"
+- Estructura de datos: **01_GUIA_COMPLETA.md** → "Estructura de Datos"
+- Tipos de relaciones: **01_GUIA_COMPLETA.md** → "Tipos de Relaciones"
+- Ventajas: **01_GUIA_COMPLETA.md** → "Ventajas de Neo4j"
 
 ### GraphQL
-- Overview: **README_FINAL.md** → "GraphQL - Queries y Filtros"
-- Syntax: **README_FINAL.md** → "Sintaxis Neo4j GraphQL"
-- Queries principales: **README_FINAL.md** → "Queries Principales"
-- Parámetros: **GRAPHQL_CYPHER_INTEGRATION.md** → "Parámetros"
+- Overview: **01_GUIA_COMPLETA.md** → "GraphQL - Queries y Filtros"
+- Syntax: **01_GUIA_COMPLETA.md** → "Sintaxis Neo4j GraphQL"
+- Queries principales: **01_GUIA_COMPLETA.md** → "Queries Principales"
+- Parámetros: **02_INTEGRACION_GRAPHQL_CYPHER.md** → "Parámetros"
 
 ### Cypher
-- Conceptos: **CYPHER_GUIDE.md** → "Conceptos Fundamentales"
-- Queries básicas: **CYPHER_GUIDE.md** → "Queries Básicas"
-- Queries del proyecto: **CYPHER_GUIDE.md** → "Queries Usadas"
-- Patrones avanzados: **CYPHER_GUIDE.md** → "Patrones Avanzados"
-- Cheat Sheet: **CYPHER_GUIDE.md** → "Cheat Sheet"
+- Conceptos: **03_GUIA_CYPHER.md** → "Conceptos Fundamentales"
+- Queries básicas: **03_GUIA_CYPHER.md** → "Queries Básicas"
+- Queries del proyecto: **03_GUIA_CYPHER.md** → "Queries Usadas"
+- Patrones avanzados: **03_GUIA_CYPHER.md** → "Patrones Avanzados"
+- Cheat Sheet: **03_GUIA_CYPHER.md** → "Cheat Sheet"
 
 ### Integración
-- Arquitectura: **GRAPHQL_CYPHER_INTEGRATION.md** → "Arquitectura General"
-- Flujo: **GRAPHQL_CYPHER_INTEGRATION.md** → "Flujo de Ejecución"
-- Schema: **GRAPHQL_CYPHER_INTEGRATION.md** → "Definición del Schema"
-- Performance: **GRAPHQL_CYPHER_INTEGRATION.md** → "Performance y Optimización"
+- Arquitectura: **02_INTEGRACION_GRAPHQL_CYPHER.md** → "Arquitectura General"
+- Flujo: **02_INTEGRACION_GRAPHQL_CYPHER.md** → "Flujo de Ejecución"
+- Schema: **02_INTEGRACION_GRAPHQL_CYPHER.md** → "Definición del Schema"
+- Performance: **02_INTEGRACION_GRAPHQL_CYPHER.md** → "Performance y Optimización"
 
 ### Componentes
-- Descripción: **README_FINAL.md** → "Paneles y Componentes"
-- Flujo de datos: **README_FINAL.md** → "Flujo de Datos"
+- Descripción: **01_GUIA_COMPLETA.md** → "Paneles y Componentes"
+- Flujo de datos: **01_GUIA_COMPLETA.md** → "Flujo de Datos"
 - Código: Mira `app/components/`
 
 ### Setup
-- Instalación: **README_FINAL.md** → "Instalación y Configuración"
-- Configuración: **README_FINAL.md** → "Pasos de Instalación"
-- Debugging: **GRAPHQL_CYPHER_INTEGRATION.md** → "Debugging Queries"
+- Instalación: **01_GUIA_COMPLETA.md** → "Instalación y Configuración"
+- Configuración: **01_GUIA_COMPLETA.md** → "Pasos de Instalación"
+- Debugging: **02_INTEGRACION_GRAPHQL_CYPHER.md** → "Debugging Queries"
 
 ---
 
@@ -180,29 +181,29 @@ Lee toda la documentación en orden:
 
 ### Ejemplo 1: Entender una Query GraphQL
 
-1. Abre **README_FINAL.md** → "fetchPeopleWithFilters"
+1. Abre **01_GUIA_COMPLETA.md** → "fetchPeopleWithFilters"
 2. Lee la query GraphQL completa
-3. Abre **GRAPHQL_CYPHER_INTEGRATION.md** → "Flujo de Ejecución"
+3. Abre **02_INTEGRACION_GRAPHQL_CYPHER.md** → "Flujo de Ejecución"
 4. Lee paso a paso cómo se convierte a Cypher
-5. Abre **CYPHER_GUIDE.md** → busca los conceptos Cypher usados
+5. Abre **03_GUIA_CYPHER.md** → busca los conceptos Cypher usados
 
 ### Ejemplo 2: Escribir una Nueva Query Cypher
 
-1. Abre **CYPHER_GUIDE.md** → "Concepts Fundamentales"
+1. Abre **03_GUIA_CYPHER.md** → "Conceptos Fundamentales"
 2. Aprende sintaxis básica
-3. Copia un ejemplo similar de **CYPHER_GUIDE.md** → "Queries Usadas"
+3. Copia un ejemplo similar de **03_GUIA_CYPHER.md** → "Queries Usadas"
 4. Modifica para tu caso de uso
-5. Lee **CYPHER_GUIDE.md** → "Testing Cypher Queries"
+5. Lee **03_GUIA_CYPHER.md** → "Testing Cypher Queries"
 6. Prueba en Neo4j Browser
 7. Agrega a schema en `graphql_definitions.graphql`
 
 ### Ejemplo 3: Debuggear una Query Lenta
 
-1. Abre **GRAPHQL_CYPHER_INTEGRATION.md** → "Performance"
+1. Abre **02_INTEGRACION_GRAPHQL_CYPHER.md** → "Performance"
 2. Sigue las recomendaciones
-3. Abre **CYPHER_GUIDE.md** → "Debugging"
+3. Abre **03_GUIA_CYPHER.md** → "Debugging"
 4. Usa PROFILE en Neo4j Browser
-5. Sigue **GRAPHQL_CYPHER_INTEGRATION.md** → "Mejores Prácticas"
+5. Sigue **02_INTEGRACION_GRAPHQL_CYPHER.md** → "Mejores Prácticas"
 
 ---
 
@@ -244,7 +245,7 @@ Lee toda la documentación en orden:
 
 ## 📊 Matriz de Contenido
 
-| Tópico | README_FINAL | GRAPHQL_CYPHER | CYPHER_GUIDE |
+| Tópico | 01_GUIA_COMPLETA | 02_INTEGRACION | 03_GUIA_CYPHER |
 |--------|---------|---------|---------|
 | Neo4j Intro | ✅ | - | - |
 | GraphQL Básico | ✅ | ✅ | - |
@@ -280,10 +281,10 @@ Lee toda la documentación en orden:
 
 ## ✅ Checklist para Nuevos Desarrolladores
 
-- [ ] Leí README_FINAL.md completamente
+- [ ] Leí 01_GUIA_COMPLETA.md completamente
 - [ ] Entiendo cómo Neo4j almacena datos
 - [ ] Entiendo cómo GraphQL y Cypher interactúan
-- [ ] Leí CYPHER_GUIDE.md
+- [ ] Leí 03_GUIA_CYPHER.md
 - [ ] Ejecuté Neo4j localmente
 - [ ] Instalé y corrí el proyecto
 - [ ] Hice una query simple en Neo4j Browser

@@ -310,10 +310,10 @@ ReportsPanel  CypherPanel  Graph         Filtered
 
 ## 📚 Ver También
 
-- [README_FINAL.md](README_FINAL.md) - API Reference completo
-- [CYPHER_GUIDE.md](CYPHER_GUIDE.md) - Detalles de cada query
-- [GRAPHQL_CYPHER_INTEGRATION.md](GRAPHQL_CYPHER_INTEGRATION.md) - Cómo funcionan juntas
-- [GraphqlService.ts](app/lib/services/GraphqlService.ts) - Código fuente
+- [01_GUIA_COMPLETA.md](01_GUIA_COMPLETA.md) - API Reference completo
+- [03_GUIA_CYPHER.md](03_GUIA_CYPHER.md) - Detalles de cada query
+- [02_INTEGRACION_GRAPHQL_CYPHER.md](02_INTEGRACION_GRAPHQL_CYPHER.md) - Cómo funcionan juntas
+- [GraphqlService.ts](../../app/lib/services/GraphqlService.ts) - Código fuente
 
 ---
 
