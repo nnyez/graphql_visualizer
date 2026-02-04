@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { GraphQLClient, gql } from "graphql-request";
 import { Person } from "../types/graphqlTypes";
 
@@ -46,6 +47,7 @@ export const fetchPeopleWithFilters = async (filters: FilterOptions) => {
       $frequencyMax: Int!
       $importanceMin: Int!
       $importanceMax: Int!
+      $statuses: [RelationshipStatus!]!
     ) {
       people {
         id
@@ -61,6 +63,7 @@ export const fetchPeopleWithFilters = async (filters: FilterOptions) => {
                 { frecuency_LTE: $frequencyMax }
                 { importance_GTE: $importanceMin }
                 { importance_LTE: $importanceMax }
+                { status_IN: $statuses }
               ]
             }
           }
@@ -86,23 +89,17 @@ export const fetchPeopleWithFilters = async (filters: FilterOptions) => {
     frequencyMax: filters.frequencyRange[1] || 10,
     importanceMin: filters.importanceRange[0] || 1,
     importanceMax: filters.importanceRange[1] || 10,
+    statuses: filters.relationshipTypes,
   };
 
   const data = await client.request<{ people: Person[] }>(query, variables);
   
-  // Filtrar por tipo de relación en cliente ya que el filtro de enums es más complejo
-  const filteredPeople: Person[] = data.people.map(person => ({
-    ...person,
-    relationshipsConnection: {
-      ...person.relationshipsConnection,
-      edges: person.relationshipsConnection?.edges.filter(edge => 
-        filters.relationshipTypes.includes(edge.properties.status)
-      ) || [],
-      totalCount: person.relationshipsConnection?.edges.filter(edge => 
-        filters.relationshipTypes.includes(edge.properties.status)
-      ).length || 0,
-    }
-  }));
+  // Filtrar personas que no tengan relaciones después del filtrado en servidor
+  const filteredPeople: Person[] = data.people.filter(
+    person => (person.relationshipsConnection?.totalCount || 0) > 0
+  );
+  
+  return filteredPeople;
   
   return filteredPeople;
 };
@@ -316,4 +313,105 @@ export const fetchInfluentialPerson = async () => {
   });
   
   return mostInfluential ? [mostInfluential] : [];
+};
+
+// Nuevas queries que usan campos Cypher personalizados
+export const fetchInfluentialPeopleWithCypher = async (limit: number = 10) => {
+  const query = gql`
+    query GetInfluentialPeople($limit: Int!) {
+      influentialPeople(limit: $limit) {
+        id
+        name
+        nickname
+        email
+        photoUrl
+        averageImportance
+        relationshipsConnection {
+          totalCount
+        }
+      }
+    }
+  `;
+
+  const variables = { limit };
+  const data = await client.request<{ influentialPeople: any[] }>(query, variables);
+  return data.influentialPeople;
+};
+
+export const fetchMostConnectedPersonWithCypher = async () => {
+  const query = gql`
+    query GetMostConnectedPerson {
+      mostConnectedPerson {
+        id
+        name
+        nickname
+        email
+        photoUrl
+        relationshipsConnection {
+          totalCount
+        }
+      }
+    }
+  `;
+
+  const data = await client.request<{ mostConnectedPerson: any }>(query);
+  return data.mostConnectedPerson;
+};
+
+export const fetchMutualFriends = async (personId1: string, personId2: string) => {
+  const query = gql`
+    query GetMutualFriends($personId1: ID!, $personId2: ID!) {
+      mutualFriendsQuery(personId1: $personId1, personId2: $personId2) {
+        id
+        name
+        nickname
+        email
+        mutualFriendsCount
+      }
+    }
+  `;
+
+  const variables = { personId1, personId2 };
+  const data = await client.request<{ mutualFriendsQuery: any[] }>(query, variables);
+  return data.mutualFriendsQuery;
+};
+
+export const fetchFriendsWithCypher = async (personId: string) => {
+  const query = gql`
+    query GetFriends($personId: ID!) {
+      people(where: { id_EQ: $personId }) {
+        friends {
+          id
+          name
+          nickname
+          email
+          photoUrl
+        }
+      }
+    }
+  `;
+
+  const variables = { personId };
+  const data = await client.request<{ people: any[] }>(query, variables);
+  return data.people[0]?.friends || [];
+};
+
+export const fetchFamilyWithCypher = async (personId: string) => {
+  const query = gql`
+    query GetFamily($personId: ID!) {
+      people(where: { id_EQ: $personId }) {
+        familyMembers {
+          id
+          name
+          nickname
+          email
+          photoUrl
+        }
+      }
+    }
+  `;
+
+  const variables = { personId };
+  const data = await client.request<{ people: any[] }>(query, variables);
+  return data.people[0]?.familyMembers || [];
 };

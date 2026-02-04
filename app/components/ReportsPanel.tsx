@@ -52,9 +52,10 @@ const REPORTS: Report[] = [
 interface ReportsPanelProps {
   people: Person[];
   selectedPersonId?: string | null;
+  selectedPeopleForMutual?: string[];
 }
 
-export default function ReportsPanel({ people, selectedPersonId }: ReportsPanelProps) {
+export default function ReportsPanel({ people, selectedPersonId, selectedPeopleForMutual = [] }: ReportsPanelProps) {
   const [selectedReport, setSelectedReport] = useState<Report | null>(null);
   const [selectedPerson, setSelectedPerson] = useState<string>(selectedPersonId || "");
   const [secondPerson, setSecondPerson] = useState<string>("");
@@ -67,6 +68,16 @@ export default function ReportsPanel({ people, selectedPersonId }: ReportsPanelP
       setSelectedPerson(selectedPersonId);
     }
   }, [selectedPersonId]);
+
+  // Sincronizar selectedPeopleForMutual con selectedPerson y secondPerson
+  useEffect(() => {
+    if (selectedPeopleForMutual && selectedPeopleForMutual.length >= 1) {
+      setSelectedPerson(selectedPeopleForMutual[0]);
+      if (selectedPeopleForMutual.length >= 2) {
+        setSecondPerson(selectedPeopleForMutual[1]);
+      }
+    }
+  }, [selectedPeopleForMutual]);
 
   const handleRunReport = async () => {
     if (!selectedReport) return;
@@ -182,6 +193,21 @@ export default function ReportsPanel({ people, selectedPersonId }: ReportsPanelP
 
           {selectedReport.type === "commonFriends" && (
             <>
+              {selectedPeopleForMutual.length > 0 && (
+                <div className="mb-4 p-2 bg-green-900/30 border border-green-700 rounded">
+                  <p className="text-xs text-green-400 mb-1">✓ Seleccionadas desde el grafo:</p>
+                  <div className="flex gap-2 flex-wrap">
+                    {selectedPeopleForMutual.map((personId) => {
+                      const person = people.find(p => p.id === personId);
+                      return (
+                        <span key={personId} className="bg-green-600 text-white px-2 py-1 rounded text-xs">
+                          {person?.name}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
               <div className="mb-4">
                 <label className="block text-sm font-semibold text-gray-300 mb-2">
                   Primera Persona

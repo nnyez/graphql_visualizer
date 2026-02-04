@@ -9,6 +9,7 @@ import { fetchPeople, fetchPeopleWithFilters } from "./lib/services/GraphqlServi
 import { Person, RelationshipStatus } from "./lib/types/graphqlTypes";
 import FiltersPanel, { FilterOptions } from "./components/FiltersModal";
 import ReportsPanel from "./components/ReportsPanel";
+import CypherPanel from "./components/CypherPanel";
 
 const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
   ssr: false,
@@ -81,7 +82,9 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedPersonId, setSelectedPersonId] = useState<string | null>(null);
+  const [selectedPeopleForMutual, setSelectedPeopleForMutual] = useState<string[]>([]); // Array de hasta 2 personas
   const [filters, setFilters] = useState<FilterOptions>(DEFAULT_FILTERS);
+  const [showAnalytics, setShowAnalytics] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -98,6 +101,30 @@ export default function Home() {
 
   const handleFiltersChange = (newFilters: FilterOptions) => {
     setFilters(newFilters);
+  };
+
+  // Manejador de click en nodos para amigos comunes
+  const handleNodeClick = (node: any) => {
+    setSelectedPersonId(node.id);
+    
+    // Lógica para seleccionar personas para amigos comunes
+    setSelectedPeopleForMutual((prev) => {
+      const newSelection = [...prev];
+      
+      // Si ya existe en la selección, removerlo
+      if (newSelection.includes(node.id)) {
+        return newSelection.filter((id) => id !== node.id);
+      }
+      
+      // Si hay menos de 2, agregarlo
+      if (newSelection.length < 2) {
+        return [...newSelection, node.id];
+      }
+      
+      // Si hay 2, remover el primero y agregar el nuevo
+      newSelection.shift();
+      return [...newSelection, node.id];
+    });
   };
 
   // Función para detectar si hay filtros activos
@@ -124,12 +151,15 @@ export default function Home() {
         const displayPeople: Person[] = hasActiveFilters
           ? await fetchPeopleWithFilters(filters)
           : people;
+        
         // Transformar datos a formato de grafo
-        const nodes: GraphNode[] = displayPeople.map((person) => ({
-          id: person.id,
-          label: person.name,
-          size: person.relationshipsConnection?.totalCount,
-        }));
+        const nodes: GraphNode[] = displayPeople
+          .filter(person => (person.relationshipsConnection?.totalCount || 0) > 0)
+          .map((person) => ({
+            id: person.id,
+            label: person.name,
+            size: person.relationshipsConnection?.totalCount,
+          }));
 
         const links: GraphLink[] = [];
         displayPeople.forEach((person) => {
@@ -174,7 +204,11 @@ export default function Home() {
   return (
     <div className="flex w-screen h-screen bg-gray-900">
       {/* Panel de Reportes Lateral Izquierdo */}
-      <ReportsPanel people={allPeople} selectedPersonId={selectedPersonId} />
+      <ReportsPanel 
+        people={allPeople} 
+        selectedPersonId={selectedPersonId}
+        selectedPeopleForMutual={selectedPeopleForMutual}
+      />
 
       {/* Gráfico Principal */}
       <div
@@ -240,9 +274,7 @@ export default function Home() {
             statusColorMap[link.status || "COLLEAGUE"] || "#60a5fa"
           }
           linkWidth={(link: any) => Math.max((link.importance || 1) * 0.3, 0.1)}
-          onNodeClick={(node: any) => {
-            setSelectedPersonId(node.id);
-          }}
+          onNodeClick={handleNodeClick}
           linkDirectionalParticles={2}
           linkDirectionalParticleSpeed={(link: any) =>
             0.0005 * (link.frecuency || 1)
@@ -264,6 +296,34 @@ export default function Home() {
 
       {/* Panel de Filtros Lateral Derecho */}
       <FiltersPanel onFiltersChange={handleFiltersChange} currentFilters={filters} />
+
+      {/* Botón toggle para Análisis - Centrado arriba */}
+      <button
+        onClick={() => setShowAnalytics(!showAnalytics)}
+        className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors z-50 shadow-lg"
+      >
+        {showAnalytics ? "Cerrar Análisis" : "📊 Análisis"}
+      </button>
+
+      {/* Panel de Análisis Modal Centrado - Arriba */}
+      {showAnalytics && (
+        <div className="fixed top-16 left-1/2 transform -translate-x-1/2 w-11/12 max-w-6xl bg-gray-800 border-2 border-gray-700 rounded-lg shadow-2xl z-50 overflow-y-auto max-h-[calc(100vh-100px)]">
+          <div className="flex justify-between items-center sticky top-0 bg-gray-800 border-b border-gray-700 p-3 z-10">
+            <h2 className="font-bold text-green-400">Reportes Cypher</h2>
+            <button
+              onClick={() => setShowAnalytics(false)}
+              className="text-gray-400 hover:text-white text-xl font-bold"
+            >
+              ✕
+            </button>
+          </div>
+          <CypherPanel 
+            people={allPeople} 
+            selectedPersonId={selectedPersonId}
+            selectedPeopleForMutual={selectedPeopleForMutual}
+          />
+        </div>
+      )}
     </div>
   );
 }
