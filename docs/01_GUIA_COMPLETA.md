@@ -1,6 +1,7 @@
 # GraphQL Visualizer - Documentación Completa
 
 ## 📋 Tabla de Contenidos
+
 1. [Descripción General](#descripción-general)
 2. [Arquitectura del Proyecto](#arquitectura-del-proyecto)
 3. [Neo4j y su Funcionamiento](#neo4j-y-su-funcionamiento)
@@ -21,6 +22,7 @@
 - **Visualización**: react-force-graph-2d (Física en 2D)
 
 ### Características Principales
+
 - 📊 Visualización interactiva de grafos
 - 🔍 Filtros avanzados (tipo relación, frecuencia, importancia)
 - 📈 Reportes múltiples (amigos, familiares, influyentes, etc.)
@@ -64,6 +66,7 @@ graphql_visualizer/
 ### ¿Qué es Neo4j?
 
 Neo4j es una **base de datos de grafos** altamente optimizada para:
+
 - Almacenar nodos (entidades) y relaciones entre ellos
 - Ejecutar queries que navegan relaciones de forma eficiente
 - Realizar análisis complejos de redes
@@ -192,11 +195,13 @@ query GetPeopleWithFilters(
 ```
 
 **Parámetros**:
+
 - `frequencyMin/Max`: Rango de frecuencia (1-10)
 - `importanceMin/Max`: Rango de importancia (1-10)
 - `statuses`: Array de tipos (FRIEND, FAMILY, COLLEAGUE)
 
 **Lógica de Filtrado**:
+
 1. Servidor filtra relaciones por frecuencia, importancia Y estado
 2. Solo retorna personas con al menos 1 relación que cumple criterios
 3. Cliente solo necesita mostrar datos devueltos
@@ -295,6 +300,7 @@ query MutualFriendsQuery($personId1: ID!, $personId2: ID!) {
 ### ¿Qué es Cypher?
 
 **Cypher** es el lenguaje de queries nativo de Neo4j:
+
 - Diseñado específicamente para grafos
 - Sintaxis intuitiva (visualmente representa el grafo)
 - Más poderoso que GraphQL para análisis complejos
@@ -309,6 +315,7 @@ ORDER BY rel.importance DESC
 ```
 
 **Componentes**:
+
 - `MATCH`: Patrón de nodos y relaciones a buscar
 - `WHERE`: Condiciones de filtrado
 - `RETURN`: Qué retornar
@@ -332,6 +339,7 @@ END as result
 **Qué hace**: Calcula el promedio de importancia de todas las relaciones salientes
 
 **Acceso en GraphQL**:
+
 ```graphql
 query {
   people {
@@ -354,6 +362,7 @@ RETURN friend
 **Qué hace**: Retorna todos los amigos (relaciones con status FRIEND)
 
 **Acceso en GraphQL**:
+
 ```graphql
 query {
   people {
@@ -396,6 +405,7 @@ RETURN {
 ```
 
 **Qué hace**: Encuentra amigos en común entre dos personas
+
 - Busca amigos de persona 1
 - Busca amigos de persona 2
 - Retorna solo los que aparecen en ambas listas
@@ -418,6 +428,7 @@ LIMIT $limit
 ```
 
 **Qué hace**: Ranking de personas más influyentes
+
 - Calcula importancia promedio para cada persona
 - Ordena de mayor a menor
 - Retorna top N personas
@@ -513,12 +524,14 @@ pnpm o npm
 ### Pasos de Instalación
 
 1. **Clonar y instalar dependencias**
+
 ```bash
 cd graphql_visualizer
 pnpm install
 ```
 
-2. **Configurar Neo4j**
+1. **Configurar Neo4j**
+
 ```bash
 # Neo4j debe estar corriendo en:
 # neo4j://127.0.0.1:7687
@@ -526,19 +539,22 @@ pnpm install
 # Contraseña: password (o la que hayas configurado)
 ```
 
-3. **Cargar datos de prueba**
+1. **Cargar datos de prueba**
+
 ```bash
 cd backend
 node seedData.js
 ```
 
-4. **Iniciar servidor Apollo (backend)**
+1. **Iniciar servidor Apollo (backend)**
+
 ```bash
 node server.js
 # Escucha en http://localhost:4000/graphql
 ```
 
-5. **Iniciar frontend (en otra terminal)**
+1. **Iniciar frontend (en otra terminal)**
+
 ```bash
 pnpm dev
 # Abre http://localhost:3000
@@ -606,21 +622,25 @@ interface Person {
 ## 🎨 Paneles y Componentes
 
 ### 1. ReportsPanel (Izquierda)
+
 - Reportes estándar usando GraphQL
 - 5 tipos: amigos, familiares, amigos comunes, más conectado, influyente
 - Sincroniza con clicks en el grafo
 
 ### 2. FiltersPanel (Derecha)
+
 - Selección de tipos de relación
 - Range sliders para frecuencia e importancia
 - Actualiza grafo en tiempo real
 
 ### 3. CypherPanel (Modal)
+
 - Reportes usando queries Cypher
 - Acceso directo a campos calculados
 - Panel flotante con scroll
 
 ### 4. AnalyticsPanel (Antiguo)
+
 - Análisis rápido de influencia y conexiones
 - Ya no se usa (reemplazado por CypherPanel)
 
@@ -653,11 +673,13 @@ Frontend renderiza resultados en paneles
 ### Agregar Nueva Query
 
 1. **Definir en schema** (`graphql_definitions.graphql`)
+
 ```graphql
 query miConsulta(...): Tipo @cypher(statement: "...")
 ```
 
-2. **Crear función en GraphqlService.ts**
+1. **Crear función en GraphqlService.ts**
+
 ```typescript
 export const miConsulta = async (params) => {
   const query = gql`query { ... }`;
@@ -666,7 +688,8 @@ export const miConsulta = async (params) => {
 };
 ```
 
-3. **Usar en componentes**
+1. **Usar en componentes**
+
 ```typescript
 const resultado = await miConsulta(params);
 ```
@@ -678,6 +701,7 @@ const resultado = await miConsulta(params);
 **Objetivo**: Encontrar todos los amigos de Juan que tienen importancia > 7
 
 ### Paso 1: GraphQL Query
+
 ```graphql
 query {
   people(where: { name_CONTAINS: "Juan" }) {
@@ -706,6 +730,7 @@ query {
 ```
 
 ### Paso 2: Cypher Equivalente
+
 ```cypher
 MATCH (juan:Person {name: "Juan"})-[rel:HAS_RELATIONSHIP {status: "FRIEND"}]->(friend:Person)
 WHERE rel.importance > 7
@@ -713,6 +738,7 @@ RETURN friend.name, friend.email, rel.importance
 ```
 
 ### Paso 3: Código TypeScript
+
 ```typescript
 const amigosInfluyentes = await fetchPeopleWithFilters({
   relationshipTypes: ['FRIEND'],
@@ -736,7 +762,8 @@ const amigosInfluyentes = await fetchPeopleWithFilters({
 
 ⚠️ **Filtrado en Servidor**: Los filtros se aplican en Neo4j, no en cliente, para máxima eficiencia
 
-⚠️ **Cypher vs GraphQL**: 
+⚠️ **Cypher vs GraphQL**:
+
 - GraphQL es ideal para queries estándar y filtradas
 - Cypher es mejor para análisis y traversals complejos
 
@@ -747,6 +774,7 @@ const amigosInfluyentes = await fetchPeopleWithFilters({
 ## 🎯 Conclusión
 
 Este proyecto demuestra:
+
 - ✅ Uso avanzado de Neo4j para análisis de grafos
 - ✅ Integración Neo4j ↔ GraphQL ↔ Frontend
 - ✅ Queries Cypher embebidas en schema GraphQL
